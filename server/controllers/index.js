@@ -12,23 +12,30 @@ module.exports = {
       // console.log('data: ',data);
       // 
       
-      var data;
-      
-      db.con.connect((err) => {
-             
-        var sql = 'SELECT * FROM messages';
-        db.con.query(sql, function (err, result) {
-          
-          
-          
-          data = JSON.stringify(result);
-          console.log(`data is: `, data);
-          res.send(data);
-          
-          
-        });
+      var data = models.messages.get((err, data) => {
         
-      }); 
+        console.log('data from controllers:', data);
+        res.send(data);       
+        
+      });
+      
+
+      // db.con.connect((err) => {
+             
+      //   var sql = 'SELECT * FROM messages';
+      //   db.con.query(sql, function (err, result) {
+          
+          
+          
+      //     data = JSON.stringify(result);
+      //     console.log(`data is: `, data);
+      //     res.send(data);
+          
+          
+      //   });
+        
+      // }); 
+      
       
       
       
