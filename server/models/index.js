@@ -1,11 +1,50 @@
 var db = require('../db');
-var Promise = require('bluebird');
 
-var queryAsync = Promise.promisify(db.con.query);
 
 module.exports = {
   messages: {
-    get: function () {}, // a function which produces all the messages
+    get: function () {
+           
+      var data;
+      
+      db.con.connect((err) => {
+             
+        var sql = 'SELECT * FROM messages';
+        db.con.query(sql, function (err, result) {
+          
+          
+          
+          data = JSON.stringify(result);
+          console.log(`result: `, data);
+          return data;
+        });
+        
+      });      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    }, // a function which produces all the messages
     post: function (username, roomname, message) {
  
  
@@ -23,7 +62,7 @@ module.exports = {
             console.log(err);
           }
           //if not then insert username into users table  
-          if (!result) {
+          if ( result.length === 0) {
                 
             var insertSQL = `INSERT INTO users (username) VALUES(?)`;
             db.con.query(insertSQL, [username], function (err, result) {     
