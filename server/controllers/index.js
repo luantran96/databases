@@ -1,72 +1,33 @@
 var models = require('../models');
-var db = require('../db/index');
-
-
 
 module.exports = {
   messages: {
+    // a function which handles a get request for all messages
     get: function (req, res) {
-      
-
-      // var data = models.messages.get();
-      // console.log('data: ',data);
-      // 
-      
       var data = models.messages.get((err, data) => {
-        
-        console.log('data from controllers:', data);
-        res.send(data);       
-        
+        res.send(data);           
       });
       
-
-      // db.con.connect((err) => {
-             
-      //   var sql = 'SELECT * FROM messages';
-      //   db.con.query(sql, function (err, result) {
-          
-          
-          
-      //     data = JSON.stringify(result);
-      //     console.log(`data is: `, data);
-      //     res.send(data);
-          
-          
-      //   });
-        
-      // }); 
-      
-      
-      
-      
-    }, // a function which handles a get request for all messages
+    }, 
+    // a function which handles posting a message to the database
     post: function (req, res) {
-      const {username, roomname, message} = req.body;
-
-      models.messages.post(username, roomname, message);
-      
+      const {username, roomname, text} = req.body;
+      models.messages.post(username, roomname, text);
       res.send();
-    } // a function which handles posting a message to the database
+    } 
   },
 
   users: {
     // Ditto as above
     get: function (req, res) {
-      
-      console.log('IN HERE YO!');
+      var data = models.users.get((err, data) => {
+        res.send(data);
+      });
       
     },
     post: function (req, res) {
-      const {username} = req.body;
-      
-      db.con.connect((err) => {       
-        var sql = 'INSERT INTO users (username) VALUES(?)';
-        db.con.query(sql, [username], function (err, result) {
-          console.log(`${username} is inserted!`);
-        });
-        
-      });
-      
+      const {username} = req.body; 
+      models.users.post(username);
       res.send();
     }
   }

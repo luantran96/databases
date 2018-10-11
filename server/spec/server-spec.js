@@ -91,7 +91,6 @@ describe('Persistent Node Chat Server', function() {
         request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
           
           var messageLog = JSON.parse(body);
-          console.log('messageLog :', messageLog);
           expect(messageLog[0].contents).to.equal('Men like you can never change!');
           expect(messageLog[0].roomname).to.equal('main');
           done();
