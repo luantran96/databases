@@ -1,8 +1,4 @@
-
-
-
 DROP DATABASE chat;
-
 CREATE DATABASE chat;
 
 USE chat;
@@ -11,17 +7,21 @@ USE chat;
 CREATE TABLE users (
   id int NOT NULL AUTO_INCREMENT,
   username VARCHAR(20),
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  createdAt datetime DEFAULT NULL,
+  updatedAt datetime DEFAULT NULL
 );
 
 CREATE TABLE messages (
   /* Describe your table here.*/
   id int NOT NULL AUTO_INCREMENT,
-  userID int,
+  userId int,
   roomname VARCHAR(30),
-  contents VARCHAR(50),
+  message VARCHAR(50),
   PRIMARY KEY (id),
-  CONSTRAINT FK_userID FOREIGN KEY (userID) REFERENCES users(id)
+  createdAt datetime DEFAULT NULL,
+  updatedAt datetime DEFAULT NULL,
+  CONSTRAINT FK_userId FOREIGN KEY (userId) REFERENCES users(id)
 );
 
 

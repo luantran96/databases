@@ -14,25 +14,21 @@ module.exports = {
           }
           var idArr = [];
           result.forEach((el) => {
-            idArr.push(el.userID);
+            idArr.push(el.userId);
           });
           db.con.query('SELECT * FROM users WHERE id IN (?)', [idArr], (err, idResult) => {
             result.map((el) => {
               idResult.forEach((idEl) => {
-                if (el.userID === idEl.id) {
+                if (el.userId === idEl.id) {
                   el.username = idEl.username;
                 }
               });            
             });
             
-            console.log(result);
             data = JSON.stringify(result);
             callback(null, data);             
             
           });
-          
-          
-     
         });           
       });        
     }, 
@@ -42,8 +38,8 @@ module.exports = {
       var userSQL = 'SELECT id from users WHERE username = ?';
       var roomSQL = 'SELECT id from rooms WHERE roomname = ?';
       var testSQL = 'SELECT * from users';
-      var userID;
-      var roomID;
+      var userId;
+      var roomId;
              
       db.con.connect((err) => {               
         //check if username exists in db
@@ -65,15 +61,15 @@ module.exports = {
               if (err) {
                 throw (err);
               }       
-              userID = result[0].id;            
+              userId = result[0].id;            
             });        
           //if username exists, get userid         
           } else {
           //console.log('result in username query:', result);
-            userID = result[0].id;      
+            userId = result[0].id;      
           } 
           
-          var msgSQL = `INSERT INTO messages (contents, roomname, userID) VALUES(${db.con.escape(message)},${db.con.escape(roomname)},${db.con.escape(userID)});`;
+          var msgSQL = `INSERT INTO messages (contents, roomname, userId) VALUES(${db.con.escape(message)},${db.con.escape(roomname)},${db.con.escape(userId)});`;
                  
           db.con.query(msgSQL, function (err, result) {
             if (err) {
